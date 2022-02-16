@@ -38,6 +38,21 @@ class FractalNodesOperators(Operator):
         group_input = tree.nodes.get("Group Input")
         group_outpout = tree.nodes.get("Group Output")
 
+        # Add all outputs to the group input of the geometry node
+        tree.inputs.new('NodeSocketInt', 'Instance Object Index 1')
+        tree.inputs.new('NodeSocketInt', 'Instance Object Index 2')
+        tree.inputs.new('NodeSocketInt', 'Instance Object Index 3')
+        tree.inputs.new('NodeSocketInt', 'Instance Object Index 4')
+        tree.inputs.new('NodeSocketVector', 'Rotation 1')
+        tree.inputs.new('NodeSocketVector', 'Rotation 2')
+        tree.inputs.new('NodeSocketVector', 'Rotation 3')
+        tree.inputs.new('NodeSocketVector', 'Rotation 4')
+        tree.inputs.new('NodeSocketFloat', 'Scale Factor 1')
+        tree.inputs.new('NodeSocketFloat', 'Scale Factor 2')
+        tree.inputs.new('NodeSocketFloat', 'Scale Factor 3')
+        tree.inputs.new('NodeSocketFloat', 'Scale Factor 4')
+        tree.inputs.new('NodeSocketVector', 'Scale Origin')
+
         # Create new node instance on points
         # get names from subclasses https://docs.blender.org/api/current/bpy.types.GeometryNode.html#bpy.types.GeometryNode
         instance_on_points1 = tree.nodes.new("GeometryNodeInstanceOnPoints")
@@ -67,8 +82,6 @@ class FractalNodesOperators(Operator):
         newGeom.name = "hello"
 
         nodeinputsPoints = nodeinputs.get('Points')
-
-        tree.inputs.new('NodeSocketInt', 'Color Value')
 
         # print(group_input.outputs)
         # for j in group_input.outputs:
