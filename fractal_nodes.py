@@ -100,7 +100,7 @@ class FractalNodesOperators(Operator):
         # Outputs
         fractal_iteration_group_output = fractal_iteration_group.nodes.new(
             "NodeGroupOutput")
-        fractal_iteration_group_output.location = (500, 0)
+        fractal_iteration_group_output.location = (1000, 0)
         fractal_input_instance = fractal_iteration_group.outputs.new(
             'NodeSocketGeometry', 'Instance')
 
@@ -108,43 +108,67 @@ class FractalNodesOperators(Operator):
         ## Separate / Combine
         fractal_separate = fractal_iteration_group.nodes.new(
             'ShaderNodeSeparateXYZ')
+        fractal_separate.location = (-200, 150)
         fractal_combine = fractal_iteration_group.nodes.new(
             'ShaderNodeCombineXYZ')
+        fractal_combine.location = (200, 150)
 
         # To Radians
         fractal_to_radians_1 = fractal_iteration_group.nodes.new(
             'ShaderNodeMath')
         fractal_to_radians_1.operation = 'RADIANS'
         fractal_to_radians_1.hide = True
+        fractal_to_radians_1.location = (0, 200)
 
         fractal_to_radians_2 = fractal_iteration_group.nodes.new(
             'ShaderNodeMath')
         fractal_to_radians_2.operation = 'RADIANS'
         fractal_to_radians_2.hide = True
+        fractal_to_radians_2.location = (0, 150)
 
         fractal_to_radians_3 = fractal_iteration_group.nodes.new(
             'ShaderNodeMath')
         fractal_to_radians_3.operation = 'RADIANS'
         fractal_to_radians_3.hide = True
+        fractal_to_radians_3.location = (0, 100)
 
         # Instance on points
         fractal_instance_on_point = fractal_iteration_group.nodes.new(
             "GeometryNodeInstanceOnPoints")
+        fractal_instance_on_point.inputs['Pick Instance'].default_value = True
+        fractal_instance_on_point.location = (800, 0)
 
         # Power
         fractal_power = fractal_iteration_group.nodes.new(
             'ShaderNodeMath')
         fractal_power.operation = 'POWER'
+        fractal_power.location = (-200, -300)
 
         # Combine 2
         fractal_combine2 = fractal_iteration_group.nodes.new(
             'ShaderNodeCombineXYZ')
+        fractal_combine2.location = (200, -300)
 
         # Linking nodes
         linkGroup = fractal_iteration_group.links.new
-        print(fractal_iteration_group_input.outputs['Rotation'])
-        print(fractal_separate.inputs[0])
 
+        # Linking TO instance on points
+        linkGroup(
+            fractal_combine.outputs[0], fractal_instance_on_point.inputs['Rotation'])
+        linkGroup(
+            fractal_combine2.outputs[0], fractal_instance_on_point.inputs['Scale'])
+        linkGroup(
+            fractal_iteration_group_input.outputs['Points'], fractal_instance_on_point.inputs['Points'])
+        linkGroup(
+            fractal_iteration_group_input.outputs['Instance'], fractal_instance_on_point.inputs['Instance'])
+        linkGroup(
+            fractal_iteration_group_input.outputs['Instance Index'], fractal_instance_on_point.inputs['Instance Index'])
+
+        # Linking FROM instance on points
+        linkGroup(
+            fractal_instance_on_point.outputs[0], fractal_iteration_group_output.inputs[0])
+
+        # Linking Separate / Radians / Combine
         linkGroup(
             fractal_iteration_group_input.outputs['Rotation'], fractal_separate.inputs[0])
 
@@ -162,9 +186,15 @@ class FractalNodesOperators(Operator):
         linkGroup(
             fractal_to_radians_3.outputs[0], fractal_combine.inputs['Z'])
 
+        # Linking power / combine
         linkGroup(
-            fractal_combine.outputs[0], fractal_instance_on_point.inputs['Rotation'])
+            fractal_iteration_group_input.outputs['Base'], fractal_power.inputs[0])
+        linkGroup(
+            fractal_iteration_group_input.outputs['Exponent'], fractal_power.inputs[1])
 
+        linkGroup(fractal_power.outputs[0], fractal_combine2.inputs['X'])
+        linkGroup(fractal_power.outputs[0], fractal_combine2.inputs['Y'])
+        linkGroup(fractal_power.outputs[0], fractal_combine2.inputs['Z'])
         # Add a "null" node to the tree
         groupnode = tree.nodes.new('GeometryNodeGroup')
         # Assign previously built group (which) is a tree to this node
