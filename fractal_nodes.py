@@ -58,11 +58,11 @@ class FractalNodesOperators(Operator):
         # Classic GeoNodes
         fractal_geometry_node_transform = tree.nodes.new(
             "GeometryNodeTransform")
-        fractal_geometry_node_transform = tree.nodes.new(
+        fractal_geometry_node_join = tree.nodes.new(
             "GeometryNodeJoinGeometry")
-        fractal_geometry_node_transform = tree.nodes.new(
+        fractal_geometry_node_realize = tree.nodes.new(
             "GeometryNodeRealizeInstances")
-        fractal_geometry_node_transform = tree.nodes.new(
+        fractal_geometry_node_collection = tree.nodes.new(
             "GeometryNodeCollectionInfo")
 
         # Fractal Iteration Nodes
