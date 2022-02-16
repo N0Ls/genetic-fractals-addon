@@ -74,6 +74,13 @@ class FractalNodesOperators(Operator):
         # for j in group_input.outputs:
         #     print(j.type)
 
+        # Add a "null" node to the tree
+        fractal_iteration_node = self.generateFractalIterationNode()
+        groupnode = tree.nodes.new('GeometryNodeGroup')
+        # Assign previously built group (which) is a tree to this node
+        groupnode.node_tree = fractal_iteration_node
+
+    def generateFractalIterationNode(self):
         # CREATE FRACTAL ITERATION GROUP
         # Create the node group aka node tree
         fractal_iteration_group = bpy.data.node_groups.new(
@@ -195,10 +202,8 @@ class FractalNodesOperators(Operator):
         linkGroup(fractal_power.outputs[0], fractal_combine2.inputs['X'])
         linkGroup(fractal_power.outputs[0], fractal_combine2.inputs['Y'])
         linkGroup(fractal_power.outputs[0], fractal_combine2.inputs['Z'])
-        # Add a "null" node to the tree
-        groupnode = tree.nodes.new('GeometryNodeGroup')
-        # Assign previously built group (which) is a tree to this node
-        groupnode.node_tree = fractal_iteration_group
+
+        return fractal_iteration_group
 
 
 def register():
