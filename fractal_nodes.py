@@ -36,6 +36,7 @@ class FractalNodesOperators(Operator):
 
         # Get group input and output
         group_input = tree.nodes.get("Group Input")
+        group_input.location = (-500, 0)
         group_outpout = tree.nodes.get("Group Output")
 
         # Add all outputs to the group input of the geometry node
@@ -53,17 +54,40 @@ class FractalNodesOperators(Operator):
         tree.inputs.new('NodeSocketFloat', 'Scale Factor 4')
         tree.inputs.new('NodeSocketVector', 'Scale Origin')
 
+        # Add nodes
+        # Classic GeoNodes
+        fractal_geometry_node_transform = tree.nodes.new(
+            "GeometryNodeTransform")
+        fractal_geometry_node_transform = tree.nodes.new(
+            "GeometryNodeJoinGeometry")
+        fractal_geometry_node_transform = tree.nodes.new(
+            "GeometryNodeRealizeInstances")
+        fractal_geometry_node_transform = tree.nodes.new(
+            "GeometryNodeCollectionInfo")
+
+        # Fractal Iteration Nodes
+        fractal_iteration_node_generator = self.generateFractalIterationNode()
+        fractal_iteration_node1 = tree.nodes.new('GeometryNodeGroup')
+        fractal_iteration_node1.node_tree = fractal_iteration_node_generator
+
+        fractal_iteration_node2 = tree.nodes.new('GeometryNodeGroup')
+        fractal_iteration_node2.node_tree = fractal_iteration_node_generator
+
+        fractal_iteration_node3 = tree.nodes.new('GeometryNodeGroup')
+        fractal_iteration_node3.node_tree = fractal_iteration_node_generator
+
+        fractal_iteration_node4 = tree.nodes.new('GeometryNodeGroup')
+        fractal_iteration_node4.node_tree = fractal_iteration_node_generator
+
         # Create new node instance on points
         # get names from subclasses https://docs.blender.org/api/current/bpy.types.GeometryNode.html#bpy.types.GeometryNode
-        instance_on_points1 = tree.nodes.new("GeometryNodeInstanceOnPoints")
 
         # Get inputs of node
-        nodeinputs = instance_on_points1.inputs
         # print(nodeinputs)
         # for f in nodeinputs:
         #     print(f.identifier)
 
-        nodeinputsInstance = nodeinputs.get('Instance')
+        # nodeinputsInstance = nodeinputs.get('Instance')
 
         # CREATE LINKS
 
@@ -73,7 +97,7 @@ class FractalNodesOperators(Operator):
         # Create input in input group
         # tree.inputs.new('NodeSocket')
 
-        link(group_input.outputs[0], nodeinputsInstance)
+        # link(group_input.outputs[0], nodeinputsInstance)
 
         # tree.interface_update(context)
         # https://docs.blender.org/api/current/bpy.types.NodeSocket.html#bpy.types.NodeSocket
@@ -81,17 +105,11 @@ class FractalNodesOperators(Operator):
         newGeom = group_input.outputs.new('GEOMETRY', 'new geo')
         newGeom.name = "hello"
 
-        nodeinputsPoints = nodeinputs.get('Points')
+        # nodeinputsPoints = nodeinputs.get('Points')
 
         # print(group_input.outputs)
         # for j in group_input.outputs:
         #     print(j.type)
-
-        # Add a "null" node to the tree
-        fractal_iteration_node = self.generateFractalIterationNode()
-        groupnode = tree.nodes.new('GeometryNodeGroup')
-        # Assign previously built group (which) is a tree to this node
-        groupnode.node_tree = fractal_iteration_node
 
     def generateFractalIterationNode(self):
         # CREATE FRACTAL ITERATION GROUP
