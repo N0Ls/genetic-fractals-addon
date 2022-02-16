@@ -79,6 +79,77 @@ class FractalNodesOperators(Operator):
         fractal_iteration_node4 = tree.nodes.new('GeometryNodeGroup')
         fractal_iteration_node4.node_tree = fractal_iteration_node_generator
 
+        # Links nodes
+        # Create link function
+        link = tree.links.new
+
+        link(group_input.outputs['Geometry'],
+             fractal_geometry_node_transform.inputs['Geometry'])
+        link(group_input.outputs['Scale Origin'],
+             fractal_geometry_node_transform.inputs['Scale'])
+
+        # Links TO join geometry
+        link(
+            fractal_geometry_node_transform.outputs['Geometry'], fractal_geometry_node_join.inputs[0])
+        link(fractal_iteration_node1.outputs['Instance'],
+             fractal_geometry_node_join.inputs[0])
+        link(fractal_iteration_node2.outputs['Instance'],
+             fractal_geometry_node_join.inputs[0])
+        link(fractal_iteration_node3.outputs['Instance'],
+             fractal_geometry_node_join.inputs[0])
+
+        # Link realize
+        link(fractal_geometry_node_join.outputs[0],
+             fractal_geometry_node_realize.inputs[0])
+
+        # Link to output
+        link(fractal_geometry_node_realize.outputs[0], group_outpout.inputs[0])
+
+        # Links TO iteration nodes
+        link(group_input.outputs['Scale Factor 1'],
+             fractal_iteration_node1.inputs['Base'])
+        link(group_input.outputs['Rotation 1'],
+             fractal_iteration_node1.inputs['Rotation'])
+        link(group_input.outputs['Instance Object Index 1'],
+             fractal_iteration_node1.inputs['Instance Index'])
+        link(fractal_geometry_node_collection.outputs['Geometry'],
+             fractal_iteration_node1.inputs['Instance'])
+        link(fractal_geometry_node_transform.outputs['Geometry'],
+             fractal_iteration_node1.inputs['Points'])
+
+        link(group_input.outputs['Scale Factor 2'],
+             fractal_iteration_node2.inputs['Base'])
+        link(group_input.outputs['Rotation 2'],
+             fractal_iteration_node2.inputs['Rotation'])
+        link(group_input.outputs['Instance Object Index 2'],
+             fractal_iteration_node2.inputs['Instance Index'])
+        link(fractal_geometry_node_collection.outputs['Geometry'],
+             fractal_iteration_node2.inputs['Instance'])
+        link(fractal_iteration_node1.outputs['Instance'],
+             fractal_iteration_node2.inputs['Points'])
+
+        link(group_input.outputs['Scale Factor 3'],
+             fractal_iteration_node3.inputs['Base'])
+        link(group_input.outputs['Rotation 3'],
+             fractal_iteration_node3.inputs['Rotation'])
+        link(group_input.outputs['Instance Object Index 3'],
+             fractal_iteration_node3.inputs['Instance Index'])
+        link(fractal_geometry_node_collection.outputs['Geometry'],
+             fractal_iteration_node3.inputs['Instance'])
+        link(fractal_iteration_node2.outputs['Instance'],
+             fractal_iteration_node3.inputs['Points'])
+
+        link(group_input.outputs['Scale Factor 4'],
+             fractal_iteration_node4.inputs['Base'])
+        link(group_input.outputs['Rotation 4'],
+             fractal_iteration_node4.inputs['Rotation'])
+        link(group_input.outputs['Instance Object Index 4'],
+             fractal_iteration_node4.inputs['Instance Index'])
+        link(fractal_geometry_node_collection.outputs['Geometry'],
+             fractal_iteration_node4.inputs['Instance'])
+        link(fractal_iteration_node3.outputs['Instance'],
+             fractal_iteration_node4.inputs['Points'])
+
         # Create new node instance on points
         # get names from subclasses https://docs.blender.org/api/current/bpy.types.GeometryNode.html#bpy.types.GeometryNode
 
@@ -88,11 +159,6 @@ class FractalNodesOperators(Operator):
         #     print(f.identifier)
 
         # nodeinputsInstance = nodeinputs.get('Instance')
-
-        # CREATE LINKS
-
-        # Create function
-        link = tree.links.new
 
         # Create input in input group
         # tree.inputs.new('NodeSocket')
