@@ -71,6 +71,29 @@ class FractalNodesOperators(Operator):
         fractal_geometry_node_scaleOrigin = fractal_group.inputs.new(
             'NodeSocketVector', 'Scale Origin')
 
+        # Set default values
+        default_scale_value = 0.4
+        default_min_value = 0.0
+        default_max_value = 2.0
+
+        fractal_geometry_node_scale1.default_value = default_scale_value
+        fractal_geometry_node_scale1.min_value = default_min_value
+        fractal_geometry_node_scale1.max_value = default_max_value
+
+        fractal_geometry_node_scale2.default_value = default_scale_value
+        fractal_geometry_node_scale2.min_value = default_min_value
+        fractal_geometry_node_scale2.max_value = default_max_value
+
+        fractal_geometry_node_scale3.default_value = default_scale_value
+        fractal_geometry_node_scale3.min_value = default_min_value
+        fractal_geometry_node_scale3.max_value = default_max_value
+
+        fractal_geometry_node_scale4.default_value = default_scale_value
+        fractal_geometry_node_scale4.min_value = default_min_value
+        fractal_geometry_node_scale4.max_value = default_max_value
+
+        fractal_geometry_node_scaleOrigin.default_value = (1.0, 1.0, 1.0)
+
         # Add nodes
         # Classic GeoNodes
         fractal_geometry_node_transform = fractal_group.nodes.new(
