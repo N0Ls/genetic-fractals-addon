@@ -204,6 +204,8 @@ class FractalNodesOperators(Operator):
         fractal_input_index = fractal_iteration_group.inputs.new(
             'NodeSocketInt', 'Instance Index')
 
+        fractal_input_exponent.default_value = 1.0
+
         # Outputs
         fractal_iteration_group_output = fractal_iteration_group.nodes.new(
             "NodeGroupOutput")
