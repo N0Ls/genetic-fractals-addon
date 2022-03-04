@@ -65,6 +65,9 @@ class FractalNodesOperators(Operator):
         fractal_geometry_node_collection = tree.nodes.new(
             "GeometryNodeCollectionInfo")
 
+        fractal_geometry_node_collection.inputs['Separate Children'].default_value = True
+        fractal_geometry_node_collection.inputs['Reset Children'].default_value = True
+
         # Fractal Iteration Nodes
         fractal_iteration_node_generator = self.generateFractalIterationNode()
         fractal_iteration_node1 = tree.nodes.new('GeometryNodeGroup')
