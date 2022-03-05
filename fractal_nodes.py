@@ -37,9 +37,10 @@ class FractalNodesOperators(Operator):
         # Get group input and output
         group_input = fractal_group.nodes.new(
             "NodeGroupInput")
-        group_input.location = (-500, 0)
+        group_input.location = (-1000, 0)
         group_output = fractal_group.nodes.new(
             "NodeGroupOutput")
+        group_output.location = (1000, 0)
 
         # Add all outputs to the group input of the geometry node
         fractal_geometry_node_index1 = fractal_group.inputs.new(
@@ -108,19 +109,31 @@ class FractalNodesOperators(Operator):
         fractal_geometry_node_collection.inputs['Separate Children'].default_value = True
         fractal_geometry_node_collection.inputs['Reset Children'].default_value = True
 
+        fractal_geometry_node_collection.location = (-700, -420)
+        fractal_geometry_node_realize.location = (775, 0)
+        fractal_geometry_node_realize.hide = True
+        fractal_geometry_node_join.location = (550, 0)
+        fractal_geometry_node_join.hide = True
+        fractal_geometry_node_transform.location = (-500, 0)
+        fractal_geometry_node_transform.hide = True
+
         # Fractal Iteration Nodes
         fractal_iteration_node_generator = self.generateFractalIterationNode()
         fractal_iteration_node1 = fractal_group.nodes.new('GeometryNodeGroup')
         fractal_iteration_node1.node_tree = fractal_iteration_node_generator
+        fractal_iteration_node1.location = (-320, 25)
 
         fractal_iteration_node2 = fractal_group.nodes.new('GeometryNodeGroup')
         fractal_iteration_node2.node_tree = fractal_iteration_node_generator
+        fractal_iteration_node2.location = (-130, -50)
 
         fractal_iteration_node3 = fractal_group.nodes.new('GeometryNodeGroup')
         fractal_iteration_node3.node_tree = fractal_iteration_node_generator
+        fractal_iteration_node3.location = (65, -160)
 
         fractal_iteration_node4 = fractal_group.nodes.new('GeometryNodeGroup')
         fractal_iteration_node4.node_tree = fractal_iteration_node_generator
+        fractal_iteration_node4.location = (250, -250)
 
         # Links nodes
         # Create link function
