@@ -211,9 +211,6 @@ class FractalNodesOperators(Operator):
         # fractal_group.interface_update(context)
         # https://docs.blender.org/api/current/bpy.types.NodeSocket.html#bpy.types.NodeSocket
 
-        newGeom = group_input.outputs.new('GEOMETRY', 'new geo')
-        newGeom.name = "hello"
-
         # nodeinputsPoints = nodeinputs.get('Points')
 
         # print(group_input.outputs)
