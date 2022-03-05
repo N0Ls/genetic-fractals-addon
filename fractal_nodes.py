@@ -38,7 +38,7 @@ class FractalNodesOperators(Operator):
         group_input = fractal_group.nodes.new(
             "NodeGroupInput")
         group_input.location = (-500, 0)
-        group_outpout = fractal_group.nodes.new(
+        group_output = fractal_group.nodes.new(
             "NodeGroupOutput")
 
         # Add all outputs to the group input of the geometry node
@@ -146,7 +146,7 @@ class FractalNodesOperators(Operator):
              fractal_geometry_node_realize.inputs[0])
 
         # Link to output
-        link(fractal_geometry_node_realize.outputs[0], group_outpout.inputs[0])
+        link(fractal_geometry_node_realize.outputs[0], group_output.inputs[0])
 
         # Links TO iteration nodes
         link(group_input.outputs['Scale Factor 1'],
