@@ -121,7 +121,8 @@ class FractalNodesOperators(Operator):
         fractal_geometry_node_transform.hide = True
 
         # Fractal Iteration Nodes
-        fractal_iteration_node_generator = self.generateFractalIterationNode()
+        fractal_iteration_node_generator = self.generateFractalIterationNode(
+            self)
         fractal_iteration_node1 = fractal_group.nodes.new('GeometryNodeGroup')
         fractal_iteration_node1.node_tree = fractal_iteration_node_generator
         fractal_iteration_node1.location = (-320, 25)

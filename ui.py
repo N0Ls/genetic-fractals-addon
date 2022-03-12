@@ -13,23 +13,12 @@ class GenerationPanel(Panel):
 
     def draw(self, context):
         layout = self.layout
-        row1 = layout.row()
-        row1.operator('op.fractal_operators',
-                      text='Create fractal').action = 'ADD_FRACTAL_COLLECTION'
-        row4 = layout.row()
-        row4.operator('op.fractal_nodes_operators',
-                      text='Create nodes').action = 'CREATE_FRACTAL_NODES'
+        row0 = layout.row()
+        row0.operator('op.fractal_operators',
+                      text='Do some crazy stuff').action = 'GENERATE_FRACTAL_SETUP'
 
         if FractalOperators.fractals_pool.exists(context.collection):
-            row1.enabled = False
-        if (len(FractalOperators.fractals_pool.pool)):
-            row2 = layout.row()
-            row2.operator('op.fractal_operators',
-                          text='Clear all').action = 'CLEAR_ALL_FRACTAL_COLLECTIONS'
-        if FractalOperators.fractals_pool.exists(context.collection):
-            row3 = layout.row()
-            row3.operator('op.fractal_operators',
-                          text='Remove selected fractal').action = 'REMOVE_SELECTED_FRACTAL_COLLECTION'
+            row0.enabled = False
 
 
 class PropertiesPanel(Panel):
