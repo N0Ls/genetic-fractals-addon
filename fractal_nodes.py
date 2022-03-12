@@ -19,11 +19,13 @@ class FractalNodesOperators(Operator):
 
     def execute(self, context):
         if self.action == 'CREATE_FRACTAL_NODES':
-            self.create_test_group(self, context=context)
+            collection = context.blend_data.collections.new(name='test')
+            self.create_fractal_group(self, context=context,
+                                      collection=collection)
         return {'FINISHED'}
 
     @staticmethod
-    def create_test_group(self, context):
+    def create_fractal_group(self, context, collection):
         # Add geo node to cube object
 
         fractal_group = bpy.data.node_groups.new(
@@ -108,6 +110,7 @@ class FractalNodesOperators(Operator):
 
         fractal_geometry_node_collection.inputs['Separate Children'].default_value = True
         fractal_geometry_node_collection.inputs['Reset Children'].default_value = True
+        fractal_geometry_node_collection.inputs[0].default_value = collection
 
         fractal_geometry_node_collection.location = (-700, -420)
         fractal_geometry_node_realize.location = (775, 0)
