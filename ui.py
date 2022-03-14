@@ -1,27 +1,31 @@
 import bpy
 from bpy.types import Panel
-from bpy.props import BoolProperty
+from bpy.props import BoolProperty, FloatProperty
 from .properties import FractalOperators
 
-bpy.types.Scene.fractal_1_like = BoolProperty(
+bpy.types.Scene.fractal_1_like = FloatProperty(
     name="Fractal 1",
     description="Some tooltip",
-    default=False)
+    default=0.00,
+    min=0.0, max=1.0, step=1, precision=2)
 
-bpy.types.Scene.fractal_2_like = BoolProperty(
+bpy.types.Scene.fractal_2_like = FloatProperty(
     name="Fractal 2",
     description="Some tooltip",
-    default=False)
+    default=0.00,
+    min=0.0, max=1.0, step=1, precision=2)
 
-bpy.types.Scene.fractal_3_like = BoolProperty(
+bpy.types.Scene.fractal_3_like = FloatProperty(
     name="Fractal 3",
     description="Some tooltip",
-    default=False)
+    default=0.00,
+    min=0.0, max=1.0, step=1, precision=2)
 
-bpy.types.Scene.fractal_4_like = BoolProperty(
+bpy.types.Scene.fractal_4_like = FloatProperty(
     name="Fractal 4",
     description="Some tooltip",
-    default=False)
+    default=0.00,
+    min=0.0, max=1.0, step=1, precision=2)
 
 
 class GenerationPanel(Panel):

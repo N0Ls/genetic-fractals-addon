@@ -110,11 +110,11 @@ class FractalOperators(Operator):
 
     @staticmethod
     def compute_next_iteration(context):
-        print(context.scene.fractal_1_like)
-        print(context.scene.fractal_2_like)
-        print(context.scene.fractal_3_like)
-        print(context.scene.fractal_4_like)
-        reset_bool_properties(context)
+        print(round(context.scene.fractal_1_like, 2))
+        print(round(context.scene.fractal_2_like, 2))
+        print(round(context.scene.fractal_3_like, 2))
+        print(round(context.scene.fractal_4_like, 2))
+        reset_float_properties(context)
 
 
 def register():

@@ -37,11 +37,11 @@ def add_cone(collection):
     bpy.data.collections[collection.name].objects.link(obj)
 
 
-def reset_bool_properties(context):
-    context.scene.fractal_1_like = False
-    context.scene.fractal_2_like = False
-    context.scene.fractal_3_like = False
-    context.scene.fractal_4_like = False
+def reset_float_properties(context):
+    context.scene.fractal_1_like = 0.00
+    context.scene.fractal_2_like = 0.00
+    context.scene.fractal_3_like = 0.00
+    context.scene.fractal_4_like = 0.00
 
 
 def register():
