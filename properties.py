@@ -140,11 +140,30 @@ class FractalOperators(Operator):
         mod.node_group = fractal_node_group
 
         # Due to a bug we can't search by name of the input for now
-        mod['Input_1'] = 1
-        mod['Input_13'][0] = 0.5
-        mod['Input_13'][1] = 0.25
-        mod['Input_13'][2] = 0.25
+        mod['Input_1'] = 0
+        mod['Input_2'] = 1
+        mod['Input_3'] = 5
+        mod['Input_4'] = 8
+        mod['Input_5'][0] = 45
+        mod['Input_5'][1] = 45
+        mod['Input_5'][2] = 45
 
+        mod['Input_6'][0] = 33
+        mod['Input_6'][1] = 48.5
+        mod['Input_6'][2] = 75.3
+
+        mod['Input_7'][0] = 87
+        mod['Input_7'][1] = 90
+        mod['Input_7'][2] = 23
+
+        mod['Input_8'][0] = 48
+        mod['Input_8'][1] = 36
+        mod['Input_8'][2] = 12
+
+        mod['Input_9'] = 1.32
+
+        print(modifier_to_binary(mod))
+        binary_to_modifier(mod, modifier_to_binary(mod))
         # for input in modifier.node_group.inputs:
         #     print(f"Input {input.identifier} is named {input.name}")
 
