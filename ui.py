@@ -2,6 +2,8 @@ import bpy
 from bpy.types import Panel
 from bpy.props import BoolProperty, FloatProperty
 from .properties import FractalOperators
+from .fractal_nodes import FractalNodesOperators
+
 
 bpy.types.Scene.fractal_1_like = FloatProperty(
     name="Fractal 1",
@@ -37,19 +39,13 @@ class GenerationPanel(Panel):
 
     def draw(self, context):
         layout = self.layout
-        row1 = layout.row()
-        row1.operator('op.fractal_operators',
-                      text='Create fractal').action = 'ADD_FRACTAL_COLLECTION'
+        row0 = layout.row()
+        row0.operator('op.fractal_operators',
+                      text='Do some crazy stuff').action = 'GENERATE_FRACTAL_SETUP'
+
         if FractalOperators.fractals_pool.exists(context.collection):
-            row1.enabled = False
-        if (len(FractalOperators.fractals_pool.pool)):
-            row2 = layout.row()
-            row2.operator('op.fractal_operators',
-                          text='Clear all').action = 'CLEAR_ALL_FRACTAL_COLLECTIONS'
-        if FractalOperators.fractals_pool.exists(context.collection):
-            row3 = layout.row()
-            row3.operator('op.fractal_operators',
-                          text='Remove selected fractal').action = 'REMOVE_SELECTED_FRACTAL_COLLECTION'
+            row0.enabled = False
+        
         row4 = layout.row()
         row4.operator('op.fractal_operators',
                       text='Next iteration').action = 'COMPUTE_NEXT_ITERATION'
@@ -70,6 +66,7 @@ class PropertiesPanel(Panel):
         layout.prop(sceneCtx, "fractal_2_like")
         layout.prop(sceneCtx, "fractal_3_like")
         layout.prop(sceneCtx, "fractal_4_like")
+
 
 
 def register():

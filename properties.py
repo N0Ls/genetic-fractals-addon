@@ -2,6 +2,8 @@ from operator import truediv
 import bpy
 from bpy.types import Operator, Scene
 from .utils import *
+from .fractal_nodes import *
+
 
 
 class Fractal():
@@ -48,6 +50,12 @@ class FractalPool():
             layer_collection, collection.name)
         bpy.context.view_layer.active_layer_collection = layerColl
 
+    def exclude(self, collection):
+        layer_collection = bpy.context.view_layer.layer_collection
+        layerColl = traverse_layer_collection(
+            layer_collection, collection.name)
+        layerColl.exclude = True
+
     def exists(self, collection):
         return find_instance(lambda f: f.container == collection, self.pool)
 
@@ -73,6 +81,8 @@ class FractalOperators(Operator):
              'clear all fractal collections'),
             ('COMPUTE_NEXT_ITERATION',
              'compute next iteration', 'compute next iteration')
+            ('GENERATE_FRACTAL_SETUP', 'generate all fractal setup',
+             'generate all fractal setup')
         ]
     )
 
@@ -87,6 +97,8 @@ class FractalOperators(Operator):
             self.clear_all_fractal_collections(context=context)
         elif self.action == 'COMPUTE_NEXT_ITERATION':
             self.compute_next_iteration(context=context)
+        elif self.action == 'GENERATE_FRACTAL_SETUP':
+            self.generate_fractal_setup(context=context)
         return {'FINISHED'}
 
     @staticmethod
@@ -97,7 +109,7 @@ class FractalOperators(Operator):
         add_cube(collection)
         add_cone(collection)
         FractalOperators.fractals_pool.add(collection)
-        FractalOperators.fractals_pool.select(collection)
+        FractalOperators.fractals_pool.exclude(collection)
 
     @staticmethod
     def remove_selected_fractal_collection(context):
@@ -115,6 +127,44 @@ class FractalOperators(Operator):
         print(round(context.scene.fractal_3_like, 2))
         print(round(context.scene.fractal_4_like, 2))
         reset_float_properties(context)
+    @staticmethod
+    def generate_fractal_setup(context):
+        FractalOperators.add_fractal_collection(context=context)
+        fractal_node_group = FractalNodesOperators.create_fractal_group(
+            FractalNodesOperators, context=context, collection=context.blend_data.collections['fractal'])
+
+        bpy.ops.mesh.primitive_cube_add()
+        obj = bpy.context.active_object
+        obj.location = (5., 0., 0.)
+        mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
+        mod.node_group = fractal_node_group
+
+        # Due to a bug we can't search by name of the input for now
+        mod['Input_1'] = 1
+        mod['Input_13'][0] = 0.5
+        mod['Input_13'][1] = 0.25
+        mod['Input_13'][2] = 0.25
+
+        # for input in modifier.node_group.inputs:
+        #     print(f"Input {input.identifier} is named {input.name}")
+
+        bpy.ops.mesh.primitive_cube_add()
+        obj = bpy.context.active_object
+        obj.location = (-5., 0., 0.)
+        mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
+        mod.node_group = fractal_node_group
+
+        bpy.ops.mesh.primitive_cube_add()
+        obj = bpy.context.active_object
+        obj.location = (0., 5., 0.)
+        mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
+        mod.node_group = fractal_node_group
+
+        bpy.ops.mesh.primitive_cube_add()
+        obj = bpy.context.active_object
+        obj.location = (0., -5., 0.)
+        mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
+        mod.node_group = fractal_node_group
 
 
 def register():
