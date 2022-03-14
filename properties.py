@@ -5,7 +5,6 @@ from .utils import *
 from .fractal_nodes import *
 
 
-
 class Fractal():
     bl_label = 'Fractal'
     bl_idname = 'cs.fractal'
@@ -80,7 +79,7 @@ class FractalOperators(Operator):
             ('CLEAR_ALL_FRACTAL_COLLECTIONS', 'clear all fractal collections',
              'clear all fractal collections'),
             ('COMPUTE_NEXT_ITERATION',
-             'compute next iteration', 'compute next iteration')
+             'compute next iteration', 'compute next iteration'),
             ('GENERATE_FRACTAL_SETUP', 'generate all fractal setup',
              'generate all fractal setup')
         ]
@@ -127,6 +126,7 @@ class FractalOperators(Operator):
         print(round(context.scene.fractal_3_like, 2))
         print(round(context.scene.fractal_4_like, 2))
         reset_float_properties(context)
+
     @staticmethod
     def generate_fractal_setup(context):
         FractalOperators.add_fractal_collection(context=context)

@@ -45,7 +45,7 @@ class GenerationPanel(Panel):
 
         if FractalOperators.fractals_pool.exists(context.collection):
             row0.enabled = False
-        
+
         row4 = layout.row()
         row4.operator('op.fractal_operators',
                       text='Next iteration').action = 'COMPUTE_NEXT_ITERATION'
@@ -66,7 +66,6 @@ class PropertiesPanel(Panel):
         layout.prop(sceneCtx, "fractal_2_like")
         layout.prop(sceneCtx, "fractal_3_like")
         layout.prop(sceneCtx, "fractal_4_like")
-
 
 
 def register():
