@@ -127,6 +127,17 @@ class FractalOperators(Operator):
         print(round(context.scene.fractal_4_like, 2))
         reset_float_properties(context)
 
+        obj = bpy.context.scene.objects["Fractal cube origin 1"]
+        mod = obj.modifiers["GeometryNodes"]
+
+        obj2 = bpy.context.scene.objects["Fractal cube origin 2"]
+        mod2 = obj2.modifiers["GeometryNodes"]
+
+        # binary_to_modifier(mod, modifier_to_binary(mod))
+        binaryMod1 = modifier_to_binary(mod)
+        binaryMod1 = mutation(binaryMod1, 0.1)
+        binary_to_modifier(mod2, binaryMod1)
+
     @staticmethod
     def generate_fractal_setup(context):
         FractalOperators.add_fractal_collection(context=context)
@@ -136,6 +147,7 @@ class FractalOperators(Operator):
         bpy.ops.mesh.primitive_cube_add()
         obj = bpy.context.active_object
         obj.location = (5., 0., 0.)
+        obj.name = 'Fractal cube origin 1'
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
 
@@ -162,26 +174,27 @@ class FractalOperators(Operator):
 
         mod['Input_9'] = 1.32
 
-        print(modifier_to_binary(mod))
-        binary_to_modifier(mod, modifier_to_binary(mod))
         # for input in modifier.node_group.inputs:
         #     print(f"Input {input.identifier} is named {input.name}")
 
         bpy.ops.mesh.primitive_cube_add()
         obj = bpy.context.active_object
         obj.location = (-5., 0., 0.)
+        obj.name = 'Fractal cube origin 2'
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
 
         bpy.ops.mesh.primitive_cube_add()
         obj = bpy.context.active_object
         obj.location = (0., 5., 0.)
+        obj.name = 'Fractal cube origin 3'
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
 
         bpy.ops.mesh.primitive_cube_add()
         obj = bpy.context.active_object
         obj.location = (0., -5., 0.)
+        obj.name = 'Fractal cube origin 4'
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
 
