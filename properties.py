@@ -5,6 +5,7 @@ from .utils import *
 from .fractal_nodes import *
 
 
+
 class Fractal():
     bl_label = 'Fractal'
     bl_idname = 'cs.fractal'
@@ -76,8 +77,10 @@ class FractalOperators(Operator):
              'add fractal collection'),
             ('REMOVE_SELECTED_FRACTAL_COLLECTION', 'remove selected fractal collection',
              'remove selected fractal collection'),
-            ('CLEAR_ALL_FRACTAL_COLLECTIONS',
-             'clear all fractal collections', 'clear all fractal collections'),
+            ('CLEAR_ALL_FRACTAL_COLLECTIONS', 'clear all fractal collections',
+             'clear all fractal collections'),
+            ('COMPUTE_NEXT_ITERATION',
+             'compute next iteration', 'compute next iteration')
             ('GENERATE_FRACTAL_SETUP', 'generate all fractal setup',
              'generate all fractal setup')
         ]
@@ -92,9 +95,10 @@ class FractalOperators(Operator):
             self.remove_selected_fractal_collection(context=context)
         elif self.action == 'CLEAR_ALL_FRACTAL_COLLECTIONS':
             self.clear_all_fractal_collections(context=context)
+        elif self.action == 'COMPUTE_NEXT_ITERATION':
+            self.compute_next_iteration(context=context)
         elif self.action == 'GENERATE_FRACTAL_SETUP':
             self.generate_fractal_setup(context=context)
-
         return {'FINISHED'}
 
     @staticmethod
@@ -116,6 +120,13 @@ class FractalOperators(Operator):
     def clear_all_fractal_collections(context):
         FractalOperators.fractals_pool.remove_all()
 
+    @staticmethod
+    def compute_next_iteration(context):
+        print(round(context.scene.fractal_1_like, 2))
+        print(round(context.scene.fractal_2_like, 2))
+        print(round(context.scene.fractal_3_like, 2))
+        print(round(context.scene.fractal_4_like, 2))
+        reset_float_properties(context)
     @staticmethod
     def generate_fractal_setup(context):
         FractalOperators.add_fractal_collection(context=context)
