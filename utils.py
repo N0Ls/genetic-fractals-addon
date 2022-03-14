@@ -64,6 +64,18 @@ def mutation(gene, mutation_rate):
     return ''.join(geneList)
 
 
+def crossover(parent1, parent2, cross_rate):
+    # children are copies of parents by default
+    child1, child2 = parent1.copy(), parent2.copy()
+    # check for recombination
+    if random.random() < cross_rate:
+
+        crossover_point = random.randrange(1, len(parent1) - 2)
+        child1 = parent1[:crossover_point] + parent2[crossover_point:]
+        child2 = parent2[:crossover_point] + parent1[crossover_point:]
+    return [child1, child2]
+
+
 def binary_to_modifier(mod, str):
     mod['Input_1'] = binaryToDecimal(str[0:8])
     mod['Input_2'] = binaryToDecimal(str[8:16])
