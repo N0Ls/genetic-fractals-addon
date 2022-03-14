@@ -150,14 +150,10 @@ def modifier_to_binary(mod):
 
     # Scale 4
     scale4 = '{:.2f}'.format(round(mod['Input_12'], 2))
-    print('Scale 4 is' + scale4)
     scale4_destructured = [scale4[0], scale4[2], scale4[3]]
     mod_str_binary += "{:02b}".format(int(scale4_destructured[0]))
     mod_str_binary += "{:04b}".format(int(scale4_destructured[1]))
     mod_str_binary += "{:04b}".format(int(scale4_destructured[2]))
-
-    print("{:02b}".format(int(scale4_destructured[0])) + "{:04b}".format(
-        int(scale4_destructured[1])) + "{:04b}".format(int(scale4_destructured[2])))
 
     # Scale Origin
     scaleOriginX = '{:.2f}'.format(round(mod['Input_13'][0], 2))
