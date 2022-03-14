@@ -53,42 +53,48 @@ def binaryToDecimalStr(val):
 
 
 def binary_to_modifier(mod, str):
-    print("Input 1 is " + binaryToDecimalStr(str[0:8]))
-    print("Input 2 is " + binaryToDecimalStr(str[8:16]))
-    print("Input 3 is " + binaryToDecimalStr(str[16:24]))
-    print("Input 4 is " + binaryToDecimalStr(str[24:32]))
+    mod['Input_1'] = binaryToDecimal(str[0:8])
+    mod['Input_2'] = binaryToDecimal(str[8:16])
+    mod['Input_3'] = binaryToDecimal(str[16:24])
+    mod['Input_4'] = binaryToDecimal(str[24:32])
 
-    print("Input 5 x is " + binaryToDecimalStr(str[32:41]))
-    print("Input 5 y is " + binaryToDecimalStr(str[41:50]))
-    print("Input 5 z is " + binaryToDecimalStr(str[50:59]))
+    mod['Input_5'][0] = binaryToDecimal(str[32:41])
+    mod['Input_5'][1] = binaryToDecimal(str[41:50])
+    mod['Input_5'][2] = binaryToDecimal(str[50:59])
 
-    print("Input 6 x is " + binaryToDecimalStr(str[59:68]))
-    print("Input 6 y is " + binaryToDecimalStr(str[68:77]))
-    print("Input 6 z is " + binaryToDecimalStr(str[77:86]))
+    mod['Input_6'][0] = binaryToDecimal(str[59:68])
+    mod['Input_6'][1] = binaryToDecimal(str[68:77])
+    mod['Input_6'][2] = binaryToDecimal(str[77:86])
 
-    print("Input 7 x is " + binaryToDecimalStr(str[86:95]))
-    print("Input 7 y is " + binaryToDecimalStr(str[95:104]))
-    print("Input 7 z is " + binaryToDecimalStr(str[104:113]))
+    mod['Input_7'][0] = binaryToDecimal(str[86:95])
+    mod['Input_7'][1] = binaryToDecimal(str[95:104])
+    mod['Input_7'][2] = binaryToDecimal(str[104:113])
 
-    print("Input 8 x is " + binaryToDecimalStr(str[113:122]))
-    print("Input 8 y is " + binaryToDecimalStr(str[122:131]))
-    print("Input 8 z is " + binaryToDecimalStr(str[131:140]))
+    mod['Input_8'][0] = binaryToDecimal(str[113:122])
+    mod['Input_8'][1] = binaryToDecimal(str[122:131])
+    mod['Input_8'][2] = binaryToDecimal(str[131:140])
 
-    print("Input 9 is " + binaryToDecimalStr(str[140:142]) + "." + binaryToDecimalStr(
+    mod['Input_9'] = float(binaryToDecimalStr(str[140:142]) + "." + binaryToDecimalStr(
         str[142:146])+binaryToDecimalStr(str[146:150]))
-    print("Input 10 is " + binaryToDecimalStr(str[150:152]) + "." + binaryToDecimalStr(
+    mod['Input_10'] = float(binaryToDecimalStr(str[150:152]) + "." + binaryToDecimalStr(
         str[152:156])+binaryToDecimalStr(str[156:160]))
-    print("Input 11 is " + binaryToDecimalStr(str[160:162]) + "." + binaryToDecimalStr(
+    mod['Input_11'] = float(binaryToDecimalStr(str[160:162]) + "." + binaryToDecimalStr(
         str[162:166])+binaryToDecimalStr(str[166:170]))
-    print("Input 12 is " + binaryToDecimalStr(str[170:172]) + "." + binaryToDecimalStr(
+    mod['Input_12'] = float(binaryToDecimalStr(str[170:172]) + "." + binaryToDecimalStr(
         str[172:176])+binaryToDecimalStr(str[176:180]))
 
-    print("Input 13 x is " + binaryToDecimalStr(str[180:182]) + "." + binaryToDecimalStr(
+    mod['Input_13'][0] = float(binaryToDecimalStr(str[180:182]) + "." + binaryToDecimalStr(
         str[182:186])+binaryToDecimalStr(str[186:190]))
-    print("Input 13 y is " + binaryToDecimalStr(str[190:192]) + "." + binaryToDecimalStr(
+    mod['Input_13'][1] = float(binaryToDecimalStr(str[190:192]) + "." + binaryToDecimalStr(
         str[192:196])+binaryToDecimalStr(str[196:200]))
-    print("Input 13 z is " + binaryToDecimalStr(str[200:202]) + "." + binaryToDecimalStr(
+    mod['Input_13'][2] = float(binaryToDecimalStr(str[200:202]) + "." + binaryToDecimalStr(
         str[202:206])+binaryToDecimalStr(str[206:210]))
+
+    # To update view
+    mod.show_render = False
+    mod.show_render = True
+    mod.show_viewport = False
+    mod.show_viewport = True
 
 
 def modifier_to_binary(mod):
