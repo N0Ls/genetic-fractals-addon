@@ -1,4 +1,5 @@
 import bpy
+import random
 
 
 def find_instance(fn, objs):
@@ -50,6 +51,17 @@ def binaryToDecimal(val):
 
 def binaryToDecimalStr(val):
     return str(int(val, 2))
+
+
+def mutation(gene, mutation_rate):
+    geneList = list(gene)
+    for i in range(len(geneList)):
+        if random.random() < float(mutation_rate):
+            if geneList[i] == '0':
+                geneList[i] = '1'
+            else:
+                geneList[i] = '0'
+    return ''.join(geneList)
 
 
 def binary_to_modifier(mod, str):
