@@ -104,9 +104,7 @@ class FractalOperators(Operator):
     def add_fractal_collection(context):
         collection = context.blend_data.collections.new(name='fractal')
         context.collection.children.link(collection)
-        add_uv_sphere(collection)
         add_cube(collection)
-        add_cone(collection)
         FractalOperators.fractals_pool.add(collection)
         FractalOperators.fractals_pool.exclude(collection)
 
@@ -121,22 +119,63 @@ class FractalOperators(Operator):
 
     @staticmethod
     def compute_next_iteration(context):
-        print(round(context.scene.fractal_1_like, 2))
-        print(round(context.scene.fractal_2_like, 2))
-        print(round(context.scene.fractal_3_like, 2))
-        print(round(context.scene.fractal_4_like, 2))
-        reset_float_properties(context)
 
-        obj = bpy.context.scene.objects["Fractal cube origin 1"]
-        mod = obj.modifiers["GeometryNodes"]
+        # Getting modifiers
+        obj1 = bpy.context.scene.objects["Fractal cube origin 1"]
+        mod1 = obj1.modifiers["GeometryNodes"]
 
         obj2 = bpy.context.scene.objects["Fractal cube origin 2"]
         mod2 = obj2.modifiers["GeometryNodes"]
 
-        # binary_to_modifier(mod, modifier_to_binary(mod))
-        binaryMod1 = modifier_to_binary(mod)
-        binaryMod1 = mutation(binaryMod1, 0.1)
-        binary_to_modifier(mod2, binaryMod1)
+        obj3 = bpy.context.scene.objects["Fractal cube origin 3"]
+        mod3 = obj3.modifiers["GeometryNodes"]
+
+        obj4 = bpy.context.scene.objects["Fractal cube origin 4"]
+        mod4 = obj4.modifiers["GeometryNodes"]
+
+        fitness1 = round(context.scene.fractal_1_like, 2)
+        fitness2 = round(context.scene.fractal_2_like, 2)
+        fitness3 = round(context.scene.fractal_3_like, 2)
+        fitness4 = round(context.scene.fractal_4_like, 2)
+
+        # Parents selection
+        parent1 = modifier_to_binary(mod1)
+        parent2 = modifier_to_binary(mod2)
+        parent3 = modifier_to_binary(mod3)
+        parent4 = modifier_to_binary(mod4)
+
+        if(random.random() > fitness1):
+            parent1 = crossover(parent3, parent4, 1.0)[0]
+
+        if(random.random() > fitness2):
+            parent2 = crossover(parent1, parent3, 1.0)[0]
+
+        if(random.random() > fitness3):
+            parent3 = crossover(parent1, parent2, 1.0)[0]
+
+        if(random.random() > fitness4):
+            parent4 = crossover(parent2, parent3, 1.0)[0]
+
+        # reset_float_properties(context)
+
+        # Reproduction
+        # faire un truc ou ça selectionne en fonction du fitness ?
+        [child1, child2] = crossover(
+            parent1=parent1, parent2=parent2, cross_rate=0.07)
+        [child3, child4] = crossover(
+            parent1=parent3, parent2=parent4, cross_rate=0.07)
+
+        # Mutation
+        child1 = mutation(child1, 0.001)
+        child2 = mutation(child2, 0.001)
+        child3 = mutation(child3, 0.001)
+        child4 = mutation(child4, 0.001)
+
+        # Apply modifers
+        binary_to_modifier(mod1, child1)
+        binary_to_modifier(mod2, child2)
+        binary_to_modifier(mod3, child3)
+        binary_to_modifier(mod4, child4)
 
     @staticmethod
     def generate_fractal_setup(context):
@@ -144,35 +183,18 @@ class FractalOperators(Operator):
         fractal_node_group = FractalNodesOperators.create_fractal_group(
             FractalNodesOperators, context=context, collection=context.blend_data.collections['fractal'])
 
+        randomGene1 = generateRandomGene()
+        randomGene2 = generateRandomGene()
+        randomGene3 = generateRandomGene()
+        randomGene4 = generateRandomGene()
+
         bpy.ops.mesh.primitive_cube_add()
         obj = bpy.context.active_object
         obj.location = (5., 0., 0.)
         obj.name = 'Fractal cube origin 1'
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
-
-        # Due to a bug we can't search by name of the input for now
-        mod['Input_1'] = 0
-        mod['Input_2'] = 1
-        mod['Input_3'] = 5
-        mod['Input_4'] = 8
-        mod['Input_5'][0] = 45
-        mod['Input_5'][1] = 45
-        mod['Input_5'][2] = 45
-
-        mod['Input_6'][0] = 33
-        mod['Input_6'][1] = 48.5
-        mod['Input_6'][2] = 75.3
-
-        mod['Input_7'][0] = 87
-        mod['Input_7'][1] = 90
-        mod['Input_7'][2] = 23
-
-        mod['Input_8'][0] = 48
-        mod['Input_8'][1] = 36
-        mod['Input_8'][2] = 12
-
-        mod['Input_9'] = 1.32
+        binary_to_modifier(mod, randomGene1)
 
         # for input in modifier.node_group.inputs:
         #     print(f"Input {input.identifier} is named {input.name}")
@@ -183,6 +205,7 @@ class FractalOperators(Operator):
         obj.name = 'Fractal cube origin 2'
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
+        binary_to_modifier(mod, randomGene2)
 
         bpy.ops.mesh.primitive_cube_add()
         obj = bpy.context.active_object
@@ -190,6 +213,7 @@ class FractalOperators(Operator):
         obj.name = 'Fractal cube origin 3'
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
+        binary_to_modifier(mod, randomGene3)
 
         bpy.ops.mesh.primitive_cube_add()
         obj = bpy.context.active_object
@@ -197,6 +221,7 @@ class FractalOperators(Operator):
         obj.name = 'Fractal cube origin 4'
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
+        binary_to_modifier(mod, randomGene4)
 
 
 def register():

@@ -66,17 +66,30 @@ def mutation(gene, mutation_rate):
 
 def crossover(parent1, parent2, cross_rate):
     # children are copies of parents by default
-    child1, child2 = parent1.copy(), parent2.copy()
+    child1 = parent1
+    child2 = parent2
+    print(type(parent1), type(parent2))
     # check for recombination
     if random.random() < cross_rate:
-
         crossover_point = random.randrange(1, len(parent1) - 2)
         child1 = parent1[:crossover_point] + parent2[crossover_point:]
         child2 = parent2[:crossover_point] + parent1[crossover_point:]
     return [child1, child2]
 
 
+def generateRandomGene():
+    gene = ''
+    for i in range(0, 210):
+        if random.random() < 0.5:
+            gene += '0'
+        else:
+            gene += '1'
+    print(len(gene))
+    return gene
+
+
 def binary_to_modifier(mod, str):
+    print(len(str))
     mod['Input_1'] = binaryToDecimal(str[0:8])
     mod['Input_2'] = binaryToDecimal(str[8:16])
     mod['Input_3'] = binaryToDecimal(str[16:24])
@@ -99,13 +112,13 @@ def binary_to_modifier(mod, str):
     mod['Input_8'][2] = binaryToDecimal(str[131:140])
 
     mod['Input_9'] = float(binaryToDecimalStr(str[140:142]) + "." + binaryToDecimalStr(
-        str[142:146])+binaryToDecimalStr(str[146:150]))
+        str[142:146])+binaryToDecimalStr(str[146:150])) % 2
     mod['Input_10'] = float(binaryToDecimalStr(str[150:152]) + "." + binaryToDecimalStr(
-        str[152:156])+binaryToDecimalStr(str[156:160]))
+        str[152:156])+binaryToDecimalStr(str[156:160])) % 2
     mod['Input_11'] = float(binaryToDecimalStr(str[160:162]) + "." + binaryToDecimalStr(
-        str[162:166])+binaryToDecimalStr(str[166:170]))
+        str[162:166])+binaryToDecimalStr(str[166:170])) % 2
     mod['Input_12'] = float(binaryToDecimalStr(str[170:172]) + "." + binaryToDecimalStr(
-        str[172:176])+binaryToDecimalStr(str[176:180]))
+        str[172:176])+binaryToDecimalStr(str[176:180])) % 2
 
     mod['Input_13'][0] = float(binaryToDecimalStr(str[180:182]) + "." + binaryToDecimalStr(
         str[182:186])+binaryToDecimalStr(str[186:190]))
