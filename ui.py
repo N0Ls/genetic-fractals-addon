@@ -76,7 +76,7 @@ class GeneticPanel(Panel):
 
         nextItRow = layout.row()
         nextItRow.operator('op.fractal_operators',
-                           text='Reset fractals').action = 'RESET_FRACTALS'
+                           text='Compute next iteration').action = 'COMPUTE_NEXT_ITERATION'
 
         layout.prop(sceneCtx, "filepath")
         # print(dir(context.scene)) # this will display the list that you should able to see
