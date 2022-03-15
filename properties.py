@@ -81,7 +81,8 @@ class FractalOperators(Operator):
             ('COMPUTE_NEXT_ITERATION',
              'compute next iteration', 'compute next iteration'),
             ('GENERATE_FRACTAL_SETUP', 'generate all fractal setup',
-             'generate all fractal setup')
+             'generate all fractal setup'),
+            ('RESET_FRACTALS', 'reset fractals', 'reset fractals')
         ]
     )
 
@@ -98,6 +99,8 @@ class FractalOperators(Operator):
             self.compute_next_iteration(context=context)
         elif self.action == 'GENERATE_FRACTAL_SETUP':
             self.generate_fractal_setup(context=context)
+        elif self.action == 'RESET_FRACTALS':
+            self.reset_fractals(context=context)
         return {'FINISHED'}
 
     @staticmethod
@@ -116,6 +119,31 @@ class FractalOperators(Operator):
     @staticmethod
     def clear_all_fractal_collections(context):
         FractalOperators.fractals_pool.remove_all()
+
+    @staticmethod
+    def reset_fractals(context):
+        # Getting modifiers
+        obj1 = bpy.context.scene.objects["Fractal cube origin 1"]
+        mod1 = obj1.modifiers["GeometryNodes"]
+
+        obj2 = bpy.context.scene.objects["Fractal cube origin 2"]
+        mod2 = obj2.modifiers["GeometryNodes"]
+
+        obj3 = bpy.context.scene.objects["Fractal cube origin 3"]
+        mod3 = obj3.modifiers["GeometryNodes"]
+
+        obj4 = bpy.context.scene.objects["Fractal cube origin 4"]
+        mod4 = obj4.modifiers["GeometryNodes"]
+
+        randomGene1 = generateRandomGene()
+        randomGene2 = generateRandomGene()
+        randomGene3 = generateRandomGene()
+        randomGene4 = generateRandomGene()
+
+        binary_to_modifier(mod1, randomGene1)
+        binary_to_modifier(mod2, randomGene2)
+        binary_to_modifier(mod3, randomGene3)
+        binary_to_modifier(mod4, randomGene4)
 
     @staticmethod
     def compute_next_iteration(context):

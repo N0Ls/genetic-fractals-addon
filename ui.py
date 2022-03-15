@@ -46,6 +46,10 @@ class GenerationPanel(Panel):
         if FractalOperators.fractals_pool.exists(context.collection):
             row0.enabled = False
 
+        row2 = layout.row()
+        row2.operator('op.fractal_operators',
+                      text='Reset fractals').action = 'RESET_FRACTALS'
+
         row4 = layout.row()
         row4.operator('op.fractal_operators',
                       text='Next iteration').action = 'COMPUTE_NEXT_ITERATION'
