@@ -1,6 +1,6 @@
 import bpy
 from bpy.types import Panel
-from bpy.props import BoolProperty, FloatProperty
+from bpy.props import FloatProperty, StringProperty
 from .properties import FractalOperators
 from .fractal_nodes import FractalNodesOperators
 
@@ -50,6 +50,11 @@ bpy.types.Scene.fractal_4_like = FloatProperty(
     default=0.00,
     min=0.0, max=1.0, step=1, precision=2)
 
+bpy.types.Scene.filepath = StringProperty(
+    name="filepath",
+    description="Some tooltip",
+    default="c:/", subtype='FILE_PATH')
+
 
 class GeneticPanel(Panel):
     bl_label = "Genetic"
@@ -71,7 +76,17 @@ class GeneticPanel(Panel):
 
         nextItRow = layout.row()
         nextItRow.operator('op.fractal_operators',
-                           text='Next iteration').action = 'COMPUTE_NEXT_ITERATION'
+                           text='Reset fractals').action = 'RESET_FRACTALS'
+
+        layout.prop(sceneCtx, "filepath")
+        # print(dir(context.scene)) # this will display the list that you should able to see
+        # operator button
+        # OBJECT_OT_CustomPath =&gt; object.custom_path
+        layout.operator("object.filepath")
+
+        row2 = layout.row()
+        row2.operator('op.fractal_operators',
+                      text='Export').action = 'EXPORT'
 
 
 def register():

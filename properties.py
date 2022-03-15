@@ -1,5 +1,6 @@
 from operator import truediv
 import bpy
+import os
 from bpy.types import Operator, Scene
 from .utils import *
 from .fractal_nodes import *
@@ -82,7 +83,8 @@ class FractalOperators(Operator):
              'compute next iteration', 'compute next iteration'),
             ('GENERATE_FRACTAL_SETUP', 'generate all fractal setup',
              'generate all fractal setup'),
-            ('RESET_FRACTALS', 'reset fractals', 'reset fractals')
+            ('RESET_FRACTALS', 'reset fractals', 'reset fractals'),
+            ('EXPORT', 'export', 'export')
         ]
     )
 
@@ -101,6 +103,8 @@ class FractalOperators(Operator):
             self.generate_fractal_setup(context=context)
         elif self.action == 'RESET_FRACTALS':
             self.reset_fractals(context=context)
+        elif self.action == 'EXPORT':
+            self.export_to_file(context=context)
         return {'FINISHED'}
 
     @staticmethod
@@ -250,6 +254,31 @@ class FractalOperators(Operator):
         mod = obj.modifiers.new(name="GeometryNodes", type='NODES')
         mod.node_group = fractal_node_group
         binary_to_modifier(mod, randomGene4)
+
+    @staticmethod
+    def export_to_file(context):
+        path = context.scene.filepath
+        os.makedirs(path, exist_ok=True)
+
+        # Write data out (2 integers)
+        with open(path + "file.txt", "w") as file:
+            # Getting modifiers
+            obj1 = bpy.context.scene.objects["Fractal cube origin 1"]
+            mod1 = obj1.modifiers["GeometryNodes"]
+
+            obj2 = bpy.context.scene.objects["Fractal cube origin 2"]
+            mod2 = obj2.modifiers["GeometryNodes"]
+
+            obj3 = bpy.context.scene.objects["Fractal cube origin 3"]
+            mod3 = obj3.modifiers["GeometryNodes"]
+
+            obj4 = bpy.context.scene.objects["Fractal cube origin 4"]
+            mod4 = obj4.modifiers["GeometryNodes"]
+            file.write(modifier_to_binary(mod1) + '\n')
+            file.write(modifier_to_binary(mod2) + '\n')
+            file.write(modifier_to_binary(mod3) + '\n')
+            file.write(modifier_to_binary(mod4) + '\n')
+            file.close()
 
 
 def register():
