@@ -198,10 +198,10 @@ class FractalOperators(Operator):
             parent1=parent3, parent2=parent4, cross_rate=0.07)
 
         # Mutation
-        child1 = mutation(child1, 0.001)
-        child2 = mutation(child2, 0.001)
-        child3 = mutation(child3, 0.001)
-        child4 = mutation(child4, 0.001)
+        child1 = mutation(child1, context.scene.mutation_rate)
+        child2 = mutation(child2, context.scene.mutation_rate)
+        child3 = mutation(child3, context.scene.mutation_rate)
+        child4 = mutation(child4, context.scene.mutation_rate)
 
         # Apply modifers
         binary_to_modifier(mod1, child1)

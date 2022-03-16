@@ -56,6 +56,12 @@ bpy.types.Scene.filepath = StringProperty(
     description="Some tooltip",
     default='//', subtype='FILE_PATH')
 
+bpy.types.Scene.mutation_rate = FloatProperty(
+    name="Mutation rate",
+    description="Some tooltip",
+    default=0.001,
+    min=0.0, max=1.0, step=0.1, precision=4)
+
 
 class GeneticPanel(Panel):
     bl_label = "Genetic"
@@ -72,6 +78,9 @@ class GeneticPanel(Panel):
         layout.prop(sceneCtx, "fractal_2_like")
         layout.prop(sceneCtx, "fractal_3_like")
         layout.prop(sceneCtx, "fractal_4_like")
+
+        layout.separator()
+        layout.prop(sceneCtx, "mutation_rate")
 
         layout.separator()
 
