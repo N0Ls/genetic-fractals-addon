@@ -1,4 +1,5 @@
 import bpy
+import os
 from bpy.types import Panel
 from bpy.props import FloatProperty, StringProperty
 from .properties import FractalOperators
@@ -53,7 +54,7 @@ bpy.types.Scene.fractal_4_like = FloatProperty(
 bpy.types.Scene.filepath = StringProperty(
     name="filepath",
     description="Some tooltip",
-    default="c:/", subtype='FILE_PATH')
+    default='//', subtype='FILE_PATH')
 
 
 class GeneticPanel(Panel):
@@ -78,22 +79,33 @@ class GeneticPanel(Panel):
         nextItRow.operator('op.fractal_operators',
                            text='Compute next iteration').action = 'COMPUTE_NEXT_ITERATION'
 
+
+class ExportPanel(Panel):
+    bl_label = "Export"
+    bl_idname = "pt.export_panel"
+    bl_space_type = 'VIEW_3D'
+    bl_region_type = 'UI'
+    bl_category = 'Fractal'
+
+    def draw(self, context):
+        layout = self.layout
+        sceneCtx = context.scene
+
         layout.prop(sceneCtx, "filepath")
-        # print(dir(context.scene)) # this will display the list that you should able to see
-        # operator button
-        # OBJECT_OT_CustomPath =&gt; object.custom_path
         layout.operator("object.filepath")
 
-        row2 = layout.row()
-        row2.operator('op.fractal_operators',
-                      text='Export').action = 'EXPORT'
+        exportButtonRow = layout.row()
+        exportButtonRow.operator('op.fractal_operators',
+                                 text='Export').action = 'EXPORT'
 
 
 def register():
     bpy.utils.register_class(GenerationPanel)
     bpy.utils.register_class(GeneticPanel)
+    bpy.utils.register_class(ExportPanel)
 
 
 def unregister():
     bpy.utils.unregister_class(GenerationPanel)
     bpy.utils.unregister_class(GeneticPanel)
+    bpy.utils.unregister_class(ExportPanel)
