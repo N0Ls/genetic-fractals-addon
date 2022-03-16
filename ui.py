@@ -63,6 +63,13 @@ bpy.types.Scene.mutation_rate = FloatProperty(
     min=0.0, max=1.0, step=0.1, precision=4)
 
 
+bpy.types.Scene.crossover_rate = FloatProperty(
+    name="Mutation rate",
+    description="Some tooltip",
+    default=0.07,
+    min=0.0, max=1.0, step=0.1, precision=4)
+
+
 class GeneticPanel(Panel):
     bl_label = "Genetic"
     bl_idname = "pt.genetic_panel"
@@ -81,6 +88,7 @@ class GeneticPanel(Panel):
 
         layout.separator()
         layout.prop(sceneCtx, "mutation_rate")
+        layout.prop(sceneCtx, "crossover_rate")
 
         layout.separator()
 

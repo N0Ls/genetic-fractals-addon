@@ -193,9 +193,9 @@ class FractalOperators(Operator):
         # Reproduction
         # faire un truc ou ça selectionne en fonction du fitness ?
         [child1, child2] = crossover(
-            parent1=parent1, parent2=parent2, cross_rate=0.07)
+            parent1=parent1, parent2=parent2, cross_rate=context.scene.crossover_rate)
         [child3, child4] = crossover(
-            parent1=parent3, parent2=parent4, cross_rate=0.07)
+            parent1=parent3, parent2=parent4, cross_rate=context.scene.crossover_rate)
 
         # Mutation
         child1 = mutation(child1, context.scene.mutation_rate)
