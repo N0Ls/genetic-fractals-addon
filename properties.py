@@ -68,8 +68,10 @@ class FractalPool():
 class FractalOperators(Operator):
     bl_label = 'Fractal operator'
     bl_idname = 'op.fractal_operators'
-    bl_description = ''
+    bl_description = 'Fractal operators for the genetic algorithm'
     bl_options = {'REGISTER', 'UNDO'}
+
+    arg: bpy.props.StringProperty()
 
     action: bpy.props.EnumProperty(
         items=[
@@ -106,6 +108,10 @@ class FractalOperators(Operator):
         elif self.action == 'EXPORT':
             self.export_to_file(context=context)
         return {'FINISHED'}
+
+    @classmethod
+    def description(cls, context, properties):
+        return "This button is for " + properties.arg
 
     @staticmethod
     def add_fractal_collection(context):

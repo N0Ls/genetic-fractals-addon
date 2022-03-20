@@ -15,16 +15,20 @@ class GenerationPanel(Panel):
 
     def draw(self, context):
         layout = self.layout
-        row0 = layout.row()
-        row0.operator('op.fractal_operators',
-                      text='Generate setup').action = 'GENERATE_FRACTAL_SETUP'
+        generateRow = layout.row()
+        generateOperator = generateRow.operator('op.fractal_operators',
+                      text='Generate setup')
+        generateOperator.action = 'GENERATE_FRACTAL_SETUP'
+        generateOperator.arg = 'generating the setup'
 
         if FractalOperators.fractals_pool.exists(context.collection):
-            row0.enabled = False
+            generateRow.enabled = False
 
-        row2 = layout.row()
-        row2.operator('op.fractal_operators',
-                      text='Reset fractals').action = 'RESET_FRACTALS'
+        resetRow = layout.row()
+        resetOperator = resetRow.operator('op.fractal_operators',
+                      text='Reset fractals')
+        resetOperator.action = 'RESET_FRACTALS'
+        resetOperator.arg = 'reseting the fractals'
 
 
 bpy.types.Scene.fractal_1_like = FloatProperty(
@@ -93,8 +97,11 @@ class GeneticPanel(Panel):
         layout.separator()
 
         nextItRow = layout.row()
-        nextItRow.operator('op.fractal_operators',
-                           text='Compute next iteration').action = 'COMPUTE_NEXT_ITERATION'
+        nextItOperator = nextItRow.operator('op.fractal_operators',
+                           text='Compute next iteration')
+        nextItOperator.action = 'COMPUTE_NEXT_ITERATION'
+        nextItOperator.arg = 'computing the next iteration (generation) of the genetic algorithm'
+        
 
 
 class ExportPanel(Panel):
@@ -112,8 +119,10 @@ class ExportPanel(Panel):
         layout.operator("object.filepath")
 
         exportButtonRow = layout.row()
-        exportButtonRow.operator('op.fractal_operators',
-                                 text='Export').action = 'EXPORT'
+        exportButtonOperator = exportButtonRow.operator('op.fractal_operators',
+                                 text='Export')
+        exportButtonOperator.action = 'EXPORT'
+        exportButtonOperator.arg = 'exporting the genome'
 
 
 def register():
