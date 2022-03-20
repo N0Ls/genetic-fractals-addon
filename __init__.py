@@ -1,12 +1,12 @@
 bl_info = {
     "name": "Genetic fractals",
-    "description": "Algo genetic powered fractals generator for Blender.",
-    "author": "",
+    "description": "Genetic algorithm powered fractals generator for Blender.",
+    "author": "LANDRODIE Nils, SCAVINNER Vincent, DUVINAGE Evan-James, DESGOUTTES Baptiste",
     "version": (1, 0),
     "blender": (3, 0, 0),
     "location": "View3D > N",
     "category": "View 3D",
-    "warning": "This version is still a work in progress.",
+    "warning": "",
 }
 
 import bpy
