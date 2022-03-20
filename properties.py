@@ -155,6 +155,8 @@ class FractalOperators(Operator):
         binary_to_modifier(mod3, randomGene3)
         binary_to_modifier(mod4, randomGene4)
 
+        reset_float_properties(context=context)
+
     @staticmethod
     def compute_next_iteration(context):
 
