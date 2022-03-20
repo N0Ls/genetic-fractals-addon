@@ -68,7 +68,6 @@ def crossover(parent1, parent2, cross_rate):
     # children are copies of parents by default
     child1 = parent1
     child2 = parent2
-    print(type(parent1), type(parent2))
     # check for recombination
     if random.random() < cross_rate:
         crossover_point = random.randrange(1, len(parent1) - 2)
@@ -84,12 +83,10 @@ def generateRandomGene():
             gene += '0'
         else:
             gene += '1'
-    print(len(gene))
     return gene
 
 
 def binary_to_modifier(mod, str):
-    print(len(str))
     mod['Input_1'] = binaryToDecimal(str[0:8])
     mod['Input_2'] = binaryToDecimal(str[8:16])
     mod['Input_3'] = binaryToDecimal(str[16:24])
@@ -136,9 +133,6 @@ def binary_to_modifier(mod, str):
 
 def modifier_to_binary(mod):
     mod_str_binary = ''
-    # print("Input 1 is " + bin(mod['Input_1']))
-    # # print("Test with 8 leading 0 " + "{0:b}".format(mod['Input_1']))
-    # print("Test with 8 leading 0 " + "{:08b}".format(mod['Input_1']))
 
     # Object indexes
     mod_str_binary += "{:08b}".format(mod['Input_1'])

@@ -228,8 +228,6 @@ class FractalOperators(Operator):
         mod.node_group = fractal_node_group
         binary_to_modifier(mod, randomGene1)
 
-        # for input in modifier.node_group.inputs:
-        #     print(f"Input {input.identifier} is named {input.name}")
 
         bpy.ops.mesh.primitive_cube_add()
         obj = bpy.context.active_object

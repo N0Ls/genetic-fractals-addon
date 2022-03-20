@@ -32,10 +32,6 @@ class FractalNodesOperators(Operator):
             'Fractal Group', 'GeometryNodeTree')
         nodes = fractal_group.nodes
 
-        # for n in nodes:
-        #     print(n.name, n)
-        #group_input = fractal_group.nodes.new("NodeGroupInput")
-
         # Get group input and output
         group_input = fractal_group.nodes.new(
             "NodeGroupInput")
@@ -209,30 +205,6 @@ class FractalNodesOperators(Operator):
              fractal_iteration_node4.inputs['Instance'])
         link(fractal_iteration_node3.outputs['Instance'],
              fractal_iteration_node4.inputs['Points'])
-
-        # Create new node instance on points
-        # get names from subclasses https://docs.blender.org/api/current/bpy.types.GeometryNode.html#bpy.types.GeometryNode
-
-        # Get inputs of node
-        # print(nodeinputs)
-        # for f in nodeinputs:
-        #     print(f.identifier)
-
-        # nodeinputsInstance = nodeinputs.get('Instance')
-
-        # Create input in input group
-        # fractal_group.inputs.new('NodeSocket')
-
-        # link(group_input.outputs[0], nodeinputsInstance)
-
-        # fractal_group.interface_update(context)
-        # https://docs.blender.org/api/current/bpy.types.NodeSocket.html#bpy.types.NodeSocket
-
-        # nodeinputsPoints = nodeinputs.get('Points')
-
-        # print(group_input.outputs)
-        # for j in group_input.outputs:
-        #     print(j.type)
 
         return fractal_group
 
