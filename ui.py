@@ -17,7 +17,7 @@ class GenerationPanel(Panel):
         layout = self.layout
         row0 = layout.row()
         row0.operator('op.fractal_operators',
-                      text='Do some crazy stuff').action = 'GENERATE_FRACTAL_SETUP'
+                      text='Generate setup').action = 'GENERATE_FRACTAL_SETUP'
 
         if FractalOperators.fractals_pool.exists(context.collection):
             row0.enabled = False
@@ -28,26 +28,26 @@ class GenerationPanel(Panel):
 
 
 bpy.types.Scene.fractal_1_like = FloatProperty(
-    name="Fractal 1",
-    description="Some tooltip",
+    name="Fractal 1 fitness",
+    description="The fitness that will determine the survival of the fractal 1",
     default=0.00,
     min=0.0, max=1.0, step=1, precision=2)
 
 bpy.types.Scene.fractal_2_like = FloatProperty(
-    name="Fractal 2",
-    description="Some tooltip",
+    name="Fractal 2 fitness",
+    description="The fitness that will determine the survival of the fractal 2",
     default=0.00,
     min=0.0, max=1.0, step=1, precision=2)
 
 bpy.types.Scene.fractal_3_like = FloatProperty(
-    name="Fractal 3",
-    description="Some tooltip",
+    name="Fractal 3 fitness",
+    description="The fitness that will determine the survival of the fractal 3",
     default=0.00,
     min=0.0, max=1.0, step=1, precision=2)
 
 bpy.types.Scene.fractal_4_like = FloatProperty(
-    name="Fractal 4",
-    description="Some tooltip",
+    name="Fractal 4 fitness",
+    description="The fitness that will determine the survival of the fractal 4",
     default=0.00,
     min=0.0, max=1.0, step=1, precision=2)
 
