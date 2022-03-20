@@ -57,19 +57,19 @@ bpy.types.Scene.fractal_4_like = FloatProperty(
 
 bpy.types.Scene.filepath = StringProperty(
     name="filepath",
-    description="Some tooltip",
+    description="Export the genome of the fractals",
     default='//', subtype='FILE_PATH')
 
 bpy.types.Scene.mutation_rate = FloatProperty(
     name="Mutation rate",
-    description="Some tooltip",
+    description="The probability of mutation for each bit of the genome",
     default=0.001,
     min=0.0, max=1.0, step=0.1, precision=4)
 
 
 bpy.types.Scene.crossover_rate = FloatProperty(
     name="Crossover rate",
-    description="Some tooltip",
+    description="The probability of a crossover",
     default=0.07,
     min=0.0, max=1.0, step=0.1, precision=4)
 
