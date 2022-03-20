@@ -64,7 +64,7 @@ bpy.types.Scene.mutation_rate = FloatProperty(
 
 
 bpy.types.Scene.crossover_rate = FloatProperty(
-    name="Mutation rate",
+    name="Crossover rate",
     description="Some tooltip",
     default=0.07,
     min=0.0, max=1.0, step=0.1, precision=4)
