@@ -10,12 +10,12 @@ bl_info = {
 }
 
 import bpy
+from . import properties
+from . import ui
+from . import utils
+from . import fractal_nodes
 
 def register():
-    from . import properties
-    from . import ui
-    from . import utils
-    from . import fractal_nodes
     properties.register()
     ui.register()
     utils.register()
@@ -23,10 +23,6 @@ def register():
 
 
 def unregister():
-    from . import properties
-    from . import ui
-    from . import utils
-    from . import fractal_nodes
     properties.unregister()
     ui.unregister()
     utils.unregister()
